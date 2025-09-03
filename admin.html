@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #222; padding: 20px; }
+        .login-container, .admin-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+        .login-container h2, .admin-container h2 { text-align: center; color: var(--laranja); }
+        .login-container input { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: none; }
+        .login-container button { width: 100%; padding: 10px; background-color: var(--laranja); color: black; font-weight: bold; border-radius: 5px; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+        th { background-color: var(--laranja); color: black; }
+        tr:nth-child(even) { background-color: #444; }
+
+        @media print {
+    a[href$=".jpg"] { /* Esconde links para imagens */
+        display: none;
+    }
+    a[href$=".png"] {
+        display: none;
+    }
+    /* Você também pode esconder a coluna do comprovante no CSS da tabela */
+    table th:nth-child(5), table td:nth-child(5) {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+
+<div class="login-container" id="login-form">
+    <h2>Acesso Restrito</h2>
+    <form id="loginForm">
+        <input type="password" id="password" placeholder="Digite a senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+
+<div class="admin-container" id="admin-panel" style="display: none;">
+    <h2>Inscrições Recebidas</h2>
+    <button onclick="window.print();">Imprimir Lista</button>
+    <table>
+       <thead>
+    <tr>
+        <th>Pago</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Posição</th>
+        <th>Tempo Jogando</th>
+        <th>Horário/Turnos</th>
+        <th>Dias</th>
+        <th>Contato</th>
+        <th>Comprovante</th>
+    </tr>
+</thead>
+        <tbody id="inscricoesTableBody">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const password = document.getElementById('password').value;
+        const response = await fetch('/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+
+            const tableBody = document.getElementById('inscricoesTableBody');
+            data.forEach(inscricao => {
+                const row = document.createElement('tr');
+
+                // Converte os dados de JSON para string
+                const turnosFormatados = JSON.parse(inscricao.turnos).join(', ');
+                const diasFormatados = JSON.parse(inscricao.dias).join(', ');
+
+                row.innerHTML = `
+                    <td><input type="checkbox" id="pago-${inscricao.id}"></td>
+                    <td>${inscricao.nome_completo}</td>
+                    <td>${inscricao.idade}</td>
+                    <td>${inscricao.posicao}</td>
+                    <td>${inscricao.tempo_jogando}</td>
+                    <td>${turnosFormatados}</td>
+                    <td>${diasFormatados}</td>
+                    <td>${inscricao.contato}</td>
+                    <td><a href="/uploads/${inscricao.comprovante_nome_arquivo}" target="_blank">Visualizar</a></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        } else {
+            alert('Senha incorreta!');
+        }
+    });
+</script>
+
+</body>
+</html>

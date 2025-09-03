@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Inscrição</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pagamento-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: var(--cinza-escuro);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .pagamento-container h2 {
+            color: var(--laranja);
+            margin-bottom: 20px;
+        }
+        .pagamento-container p {
+            color: var(--branco);
+            margin-bottom: 20px;
+        }
+        .pix-info {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .pix-info h3 {
+            color: var(--dourado);
+        }
+    </style>
+</head>
+<body>
+
+<div class="pagamento-container">
+    <h2>Sua Inscrição está quase completa!</h2>
+    <p>Para garantir a sua vaga na liga, realize o pagamento via Pix. Sua inscrição será confirmada após o envio e validação do comprovante.</p>
+    
+    <div class="pix-info">
+        <h3>Dados para o Pix</h3>
+        <p><strong>Chave Pix:</strong> (CPF/CNPJ, Telefone, E-mail, ou Chave Aleatória)</p>
+        <p><strong>Nome do Recebedor:</strong> Nome ou Empresa</p>
+        <p><strong>Valor:</strong> R$ XX,XX</p>
+    </div>
+
+    <h3>Envio do Comprovante</h3>
+    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="nome_completo" id="nome-completo-hidden">
+        <input type="file" name="comprovante" required>
+        <br><br>
+        <button type="submit" class="submit-button">Enviar Comprovante</button>
+    </form>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const inscricaoId = urlParams.get('inscricao_id');
+    
+    // Adicione o ID da inscrição na URL do formulário de upload
+    const uploadForm = document.getElementById('uploadForm');
+    uploadForm.action = `/upload?inscricao_id=${inscricaoId}`;
+</script>
+
+</body>
+</html>

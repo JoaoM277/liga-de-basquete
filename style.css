@@ -1,0 +1,456 @@
+/* Paleta de Cores */
+:root {
+    --preto: #111;
+    --cinza-escuro: #2a2a2a;
+    --laranja: #e8590c;
+    --laranja-claro: #f48024;
+    --dourado: #d4af37;
+    --branco: #fff;
+}
+
+/* Estilo Básico e Fontes */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--preto);
+    color: var(--branco);
+    margin: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Arial Black', sans-serif;
+    color: var(--laranja);
+    text-transform: uppercase;
+}
+
+/* Container principal para o efeito de flutuação */
+.main-container {
+    max-width: 90%;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+}
+
+/* --- Seção de Cabeçalho (Header) --- */
+header {
+    background-color: var(--cinza-escuro);
+    padding: 20px 40px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--dourado);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- Seção Principal (Hero) --- */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+
+    /* AQUI ESTÁ A CORREÇÃO: a imagem de fundo agora é uma propriedade do Hero */
+    background-image: url('imagens/basquete-de-fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: var(--cinza-escuro); 
+    
+}
+
+.hero-content {
+    z-index: 1;
+    max-width: 800px;
+    padding: 0 20px;
+    color: var(--branco);
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    color: var(--dourado);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: var(--laranja);
+    color: var(--branco);
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: var(--laranja-claro);
+}
+
+/* --- Seção de Informações --- */
+.info-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 80px 20px;
+    background-color: var(--preto);
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    flex-basis: 300px;
+    flex-grow: 1;
+    padding: 30px;
+    border: 1px solid var(--laranja);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-10px);
+}
+
+.info-item h2 {
+    font-size: 1.5rem;
+    color: var(--laranja);
+    margin-top: 15px;
+}
+
+.info-item p {
+    font-size: 1rem;
+    color: var(--branco);
+}
+
+.icon-placeholder {
+    width: 60px;
+    height: 60px;
+    background-color: var(--dourado);
+    margin: 0 auto 20px;
+    border-radius: 50%;
+}
+
+/* --- Seção do Formulário de Inscrição --- */
+.registration-form {
+    padding: 80px 20px;
+    background-color: var(--preto);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-card {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: var(--cinza-escuro);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--laranja-claro);
+}
+
+.registration-form h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+}
+
+/* Estilo para os Grupos de Formulário */
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--branco);
+}
+
+/* Estilo para os Campos de Input */
+input[type="text"],
+input[type="number"],
+input[type="time"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid var(--laranja-claro);
+    background-color: #3f3f3f;
+    color: var(--branco);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="time"]:focus {
+    border-color: var(--laranja);
+    outline: none;
+    box-shadow: 0 0 8px rgba(244, 128, 36, 0.5);
+}
+
+input[type="tel"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid var(--laranja-claro);
+    background-color: #3f3f3f;
+    color: var(--branco);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="tel"]:focus {
+    border-color: var(--laranja);
+    outline: none;
+    box-shadow: 0 0 8px rgba(244, 128, 36, 0.5);
+}
+
+/* Estilo para a Lista Expansiva dos Dias */
+.dias-expansivel {
+    background-color: #3f3f3f;
+    border: 1px solid var(--laranja-claro);
+    border-radius: 8px;
+    margin-top: 15px;
+    padding: 12px;
+    color: var(--branco);
+    cursor: pointer;
+}
+
+.dias-expansivel summary {
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dias-expansivel summary::after {
+    content: '▼';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+}
+
+.dias-expansivel[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.dias-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 15px;
+}
+
+.dias-checkboxes div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.dias-checkboxes label {
+    margin: 0;
+    font-weight: normal;
+    color: var(--branco);
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--laranja);
+}
+
+/* Estilo do Botão de Envio */
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: var(--laranja);
+    color: var(--preto);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 25px;
+}
+
+.submit-button:hover {
+    background-color: var(--dourado);
+    color: var(--preto);
+}
+
+/* --- Seção de Rodapé (Footer) --- */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--preto);
+    border-top: 1px solid #333;
+}
+
+/* --- Responsividade Geral --- */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .info-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .form-card {
+        padding: 20px;
+    }
+}
+
+/* Estilo para a caixa modal (pop-up) */
+.modal {
+    display: none; /* A caixa fica oculta por padrão */
+    position: fixed; /* Fixa na tela */
+    z-index: 1001; /* Fica acima de tudo, inclusive do header */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo preto semi-transparente */
+    overflow: auto; /* Adiciona scroll se o conteúdo for grande */
+    padding-top: 50px;
+}
+
+/* Conteúdo da caixa modal */
+.modal-content {
+    background-color: var(--cinza-escuro);
+    margin: 5% auto; /* Centraliza a caixa na tela */
+    padding: 20px;
+    border: 1px solid var(--laranja);
+    width: 80%; /* Largura da caixa */
+    max-width: 600px;
+    border-radius: 15px;
+    position: relative;
+    color: var(--branco);
+}
+
+.modal-content h2 {
+    color: var(--laranja);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-content li {
+    margin-bottom: 10px;
+}
+
+/* Botão de fechar (X) */
+.close-button {
+    color: var(--branco);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--laranja);
+    text-decoration: none;
+}
+
+/* Estilo para a caixa de aceite dos termos */
+.termos-aceite {
+    display: flex; /* Alinha os elementos lado a lado */
+    align-items: center; /* Centraliza verticalmente */
+    gap: 10px; /* Espaço entre a caixa e o texto */
+    margin-top: 25px; /* Espaço do elemento de cima */
+}
+
+.termos-aceite input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--laranja);
+    flex-shrink: 0; /* Impede que o checkbox encolha em telas menores */
+}
+
+/* Estilo para a cor do link */
+.termos-aceite a {
+    color: var(--laranja-claro); /* Cor do link */
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.termos-aceite a:hover {
+    color: var(--dourado);
+}
+/* Efeito visual para o botão desabilitado */
+.submit-button:disabled {
+    opacity: 0.6; /* Diminui a opacidade para dar um efeito de "apagado" */
+    cursor: not-allowed; /* Muda o cursor para indicar que o botão não pode ser clicado */
+}
+
+/* Estilo para os checkboxes de Turno */
+.turno-checkboxes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.turno-checkboxes div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.turno-checkboxes input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--laranja);
+    cursor: pointer;
+}
+
+.turno-checkboxes label {
+    margin: 0;
+    font-weight: normal;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .turno-checkboxes {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

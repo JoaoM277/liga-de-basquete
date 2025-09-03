@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrições - Liga de Basquete</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    LIGA BEIRA RIO DE BASQUETE AMADOR
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>O JOGO É A SUA PAIXÃO. A QUADRA, O SEU LUGAR.</h1>
+                <p>Se inscreva na primeira edição da melhor Liga de Basquete do Centro-sul Maranhense.</p>
+                <a href="#form" class="cta-button">Inscreva-se Agora</a>
+            </div>
+        </section>
+
+    </div> <section class="info-section">
+        <div class="info-item">
+            <div class="icon-placeholder">
+                </div>
+            <h2>Competição de Alto Nível</h2>
+            <p>Enfrente os melhores jogadores da cidade, desenvolva suas habilidades e concorra por prêmios incríveis.</p>
+        </div>
+
+        <div class="info-item">
+            <div class="icon-placeholder">
+                </div>
+            <h2>Comunidade e Paixão</h2>
+            <p>Junte-se a uma rede de entusiastas do basquete, faça novas amizades e celebre sua paixão pelo esporte.</p>
+        </div>
+
+        <div class="info-item">
+            <div class="icon-placeholder">
+                </div>
+            <h2>Organização Profissional</h2>
+            <p>Desfrute de uma experiência completa com jogos bem-organizados, placares atualizados e infraestrutura de qualidade.</p>
+        </div>
+    </section>
+
+    <section id="form" class="registration-form">
+        <div class="form-card">
+            <h2>FORMULÁRIO DE INSCRIÇÃO</h2>
+            <form action="/inscrever" method="POST">
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome_completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="idade">Idade</label>
+                    <input type="number" id="idade" name="idade" min="15" required>
+                </div>
+                <div class="form-group">
+                    <label for="posicao">Posição</label>
+                    <input type="text" id="posicao" name="posicao" placeholder="Ex: Armador, Ala, Pivô" required>
+                </div>
+                <div class="form-group">
+                 <label for="contato">Telefone para Contato</label>
+                 <input type="tel" id="contato" name="contato" placeholder="Ex: (xx) xxxxx-xxxx" required>
+                </div>
+                <div class="form-group">
+                    <label for="tempo_jogando">Tempo que Joga Basquete</label>
+                    <input type="text" id="tempo_jogando" name="tempo_jogando" placeholder="Ex: 5 anos, desde a infância" required>
+                </div>
+                
+                <div class="form-group">
+             <label>Turno de Disponibilidade</label>
+             <div class="turno-checkboxes">
+             <div>
+               <input type="checkbox" id="manha" name="turnos[]" value="Manhã">
+            <label for="manha">Manhã</label>
+               </div>
+             <div>
+             <input type="checkbox" id="tarde" name="turnos[]" value="Tarde">
+             <label for="tarde">Tarde</label>
+             </div>
+             <div>
+             <input type="checkbox" id="noite" name="turnos[]" value="Noite">
+             <label for="noite">Noite</label>
+             </div>
+           </div>
+           </div>
+
+                <div class="form-group">
+                    <details class="dias-expansivel">
+                        <summary>Melhores Dias da Semana</summary>
+                        <div class="dias-checkboxes">
+                            <div><input type="checkbox" id="domingo" name="dias[]" value="domingo"> <label for="domingo">Domingo</label></div>
+                            <div><input type="checkbox" id="segunda" name="dias[]" value="segunda"> <label for="segunda">Segunda</label></div>
+                            <div><input type="checkbox" id="terca" name="dias[]" value="terca"> <label for="terca">Terça</label></div>
+                            <div><input type="checkbox" id="quarta" name="dias[]" value="quarta"> <label for="quarta">Quarta</label></div>
+                            <div><input type="checkbox" id="quinta" name="dias[]" value="quinta"> <label for="quinta">Quinta</label></div>
+                            <div><input type="checkbox" id="sexta" name="dias[]" value="sexta"> <label for="sexta">Sexta</label></div>
+                            <div><input type="checkbox" id="sabado" name="dias[]" value="sabado"> <label for="sabado">Sábado</label></div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="form-group termos-aceite">
+                 <input type="checkbox" id="aceite-termos" required>
+                 <label for="aceite-termos">
+                 Eu li e concordo com os <a href="#" id="open-terms-link">Termos e Condições</a> de Inscrição.
+                </label>
+                </div>
+
+                <button type="submit" class="submit-button">Enviar Inscrição</button>
+                
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>Copyright © 2025 Liga de Basquete. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="terms-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Termos e Condições de Participação</h2>
+        <p>
+            Ao se inscrever, você aceita os seguintes termos:
+        </p>
+        <ol>
+            <li>O participante é responsável por sua própria segurança e bem-estar durante os jogos.</li>
+            <li>Qualquer conduta anti-esportiva resultará na desclassificação imediata, sem direito a reembolso.</li>
+            <li>O valor da inscrição não será reembolsado em caso de desistência, ausência ou desclassificação.</li>
+            <li>A Liga se reserva o direito de alterar datas, horários e locais dos jogos, informando os participantes com antecedência.</li>
+            <li>Os participantes devem respeitar as regras oficiais da liga e as decisões da arbitragem.</li>
+            <li>É dever do inscrito como atleta zelar por seus pertences durante a ocorrencia da Liga, a organização não se responsabilizara por perdas de utensilios dos atletas.</li>
+            <li>A liga será responsável pela manutenção do ambiente de jogo e sua segurança assim como tambem pede pelo zelo dos locais pelos atletas inscritos</li>
+        </ol>
+        <p>
+            Para mais detalhes, entre em contato com a organização.
+        </p>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
