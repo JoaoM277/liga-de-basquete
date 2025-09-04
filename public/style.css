@@ -115,44 +115,51 @@ header {
 .info-section {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
-    padding: 80px 20px;
-    background-color: var(--preto);
-    text-align: center;
     flex-wrap: wrap;
+    gap: 30px;
+    padding: 60px 20px;
+    background-color: var(--preto);
 }
 
 .info-item {
-    flex-basis: 300px;
-    flex-grow: 1;
-    padding: 30px;
-    border: 1px solid var(--laranja);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+    background-color: var(--cinza-escuro);
+    border: 2px solid var(--laranja);
+    border-radius: 8px;
+    padding: 30px 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .info-item:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
+/* Ícone (bola de basquete) */
+.info-item img.icon-placeholder {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+/* Título */
 .info-item h2 {
-    font-size: 1.5rem;
     color: var(--laranja);
-    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    text-transform: uppercase;
 }
 
+/* Texto */
 .info-item p {
-    font-size: 1rem;
     color: var(--branco);
-}
-
-.icon-placeholder {
-    width: 60px;
-    height: 60px;
-    background-color: var(--dourado);
-    margin: 0 auto 20px;
-    border-radius: 50%;
+    font-size: 1em;
+    line-height: 1.5;
 }
 
 /* --- Seção do Formulário de Inscrição --- */
