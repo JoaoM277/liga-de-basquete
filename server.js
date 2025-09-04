@@ -17,11 +17,6 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sua_senha_secreta';
 
 // Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI, {
-    connectTimeoutMS: 30000, // Aumenta o tempo de espera da conexão para 30s
-    socketTimeoutMS: 45000 // Aumenta o tempo limite para a operação
-}).then(() => console.log('Conectado ao MongoDB Atlas!'))
-    .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
 // Esquema do Mongoose
 const inscricaoSchema = new mongoose.Schema({
@@ -55,6 +50,22 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
+// Função para garantir a conexão com o MongoDB
+async function connectDb() {
+    if (mongoose.connection.readyState !== 1) {
+        try {
+            await mongoose.connect(MONGODB_URI, {
+                connectTimeoutMS: 30000,
+                socketTimeoutMS: 45000
+            });
+            console.log('Conectado ao MongoDB Atlas!');
+        } catch (err) {
+            console.error('Erro ao conectar ao MongoDB Atlas:', err);
+            throw err;
+        }
+    }
+}
+
 // Middleware para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -67,9 +78,9 @@ app.get('/', (req, res) => {
 
 // Rota de Inscrição
 app.post('/inscrever', async (req, res) => {
+    await connectDb(); // Garante que a conexão está ativa antes da operação
     const { nome_completo, idade, posicao, tempo_jogando, contato, turnos, dias } = req.body;
     
-    // Converte os dados do formulário para o formato do MongoDB
     const novaInscricao = new Inscricao({
         nome_completo, idade, posicao, tempo_jogando, contato,
         turnos: turnos,
@@ -87,6 +98,7 @@ app.post('/inscrever', async (req, res) => {
 
 // Rota de upload do comprovante
 app.post('/upload', upload.single('comprovante'), async (req, res) => {
+    await connectDb(); // Garante que a conexão está ativa antes da operação
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo foi enviado.');
     }
@@ -98,18 +110,20 @@ app.post('/upload', upload.single('comprovante'), async (req, res) => {
         await Inscricao.findByIdAndUpdate(inscricao_id, { comprovante_nome_arquivo: comprovanteUrl });
         res.sendFile(path.join(__dirname, 'public', 'sucesso.html'));
     } catch (err) {
-        console.error('Erro ao atualizar a inscrição com o comprovante:', err);
+        console.error('Erro ao atualizar a inscrição:', err);
         res.status(500).send('Erro no servidor ao processar o comprovante.');
     }
 });
 
 // Rota de acesso ao painel de administração
-app.get('/admin', (req, res) => {
+app.get('/admin', async (req, res) => {
+    await connectDb(); // Garante que a conexão está ativa antes da operação
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // Rota para processar o login e enviar os dados
 app.post('/admin/login', async (req, res) => {
+    await connectDb(); // Garante que a conexão está ativa antes da operação
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
         try {
@@ -124,5 +138,4 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
-// Exporta o aplicativo Express para que o Vercel possa usá-lo
 module.exports = app;
