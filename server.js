@@ -71,8 +71,8 @@ app.post('/inscrever', async (req, res) => {
     // Converte os dados do formulário para o formato do MongoDB
     const novaInscricao = new Inscricao({
         nome_completo, idade, posicao, tempo_jogando, contato,
-        turnos: JSON.parse(turnos),
-        dias: JSON.parse(dias)
+        turnos: turnos,
+        dias: dias
     });
 
     try {
