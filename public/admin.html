@@ -36,6 +36,25 @@
         display: none;
     }
 }
+
+/* Adicione este código à sua tag <style> */
+.table-wrapper {
+    overflow-x: auto; /* Habilita a rolagem horizontal */
+}
+
+@media (max-width: 768px) {
+    .table-wrapper {
+        border: 1px solid #555;
+        border-radius: 10px;
+    }
+    .admin-container h2 {
+        font-size: 1.5rem;
+    }
+    .admin-container table {
+        font-size: 0.8rem;
+        white-space: nowrap; /* Impede que o texto quebre a linha */
+    }
+}
     </style>
 </head>
 <body>
@@ -51,6 +70,7 @@
 <div class="admin-container" id="admin-panel" style="display: none;">
     <h2>Inscrições Recebidas</h2>
     <button onclick="window.print();">Imprimir Lista</button>
+   <div class="table-wrapper">
     <table>
        <thead>
     <tr>
@@ -68,6 +88,7 @@
         <tbody id="inscricoesTableBody">
             </tbody>
     </table>
+    </div>
 </div>
 
 <script>
