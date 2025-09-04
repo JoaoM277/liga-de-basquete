@@ -69,7 +69,7 @@ header {
     box-sizing: border-box;
 
     /* AQUI ESTÁ A CORREÇÃO: a imagem de fundo agora é uma propriedade do Hero */
-    background-image: url('imagens/basquete-de-fundo.jpg');
+    background-image: url('/imagens/basquete-de-fundo.jpg');
     background-size: cover;
     background-position: center;
     background-color: var(--cinza-escuro); 
