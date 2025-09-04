@@ -83,14 +83,17 @@
             const data = await response.json();
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
-
+            
             const tableBody = document.getElementById('inscricoesTableBody');
             data.forEach(inscricao => {
                 const row = document.createElement('tr');
+                
+                // CORRIGIDO: Variáveis agora são declaradas e formatadas corretamente
+                const turnosFormatados = inscricao.turnos.join(', ');
+                const diasFormatados = inscricao.dias.join(', ');
 
-                // Converte os dados de JSON para string
                 row.innerHTML = `
-                    <td><input type="checkbox" id="pago-${inscricao.id}"></td>
+                    <td><input type="checkbox" id="pago-${inscricao._id}"></td>
                     <td>${inscricao.nome_completo}</td>
                     <td>${inscricao.idade}</td>
                     <td>${inscricao.posicao}</td>
@@ -98,7 +101,7 @@
                     <td>${turnosFormatados}</td>
                     <td>${diasFormatados}</td>
                     <td>${inscricao.contato}</td>
-                    <td><a href="/uploads/${inscricao.comprovante_nome_arquivo}" target="_blank">Visualizar</a></td>
+                    <td><a href="${inscricao.comprovante_nome_arquivo}" target="_blank">Visualizar</a></td>
                 `;
                 tableBody.appendChild(row);
             });
