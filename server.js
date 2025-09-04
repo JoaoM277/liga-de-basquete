@@ -17,9 +17,16 @@ const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = 'LigadeBasquete';
 
 // Configuração do MongoDB Atlas
+// Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGODB_URI)
-    .then(() => console.log('Conectado ao MongoDB Atlas!'))
+    .then(() => {
+        console.log('Conectado ao MongoDB Atlas!');
+        // O servidor só começa a ouvir requisições APÓS a conexão ser estabelecida
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando em http://localhost:${PORT}`);
+        });
+    })
     .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
 // Esquema do Mongoose
