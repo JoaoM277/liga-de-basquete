@@ -13,7 +13,7 @@ require('dotenv').config();
 const app = express();
 
 // Senha para o painel de administração
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sua_senha_secreta';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'LigadeBasquete';
 
 // Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;

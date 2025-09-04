@@ -23,7 +23,7 @@
       "config": {
         "memory": 1024,
         "maxDuration": 60,
-        "payloadSizeLimit": "10mb"
+        "payloadSizeLimit": "100mb"
       }
     }
   ]
