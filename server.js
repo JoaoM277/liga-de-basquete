@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Senha para o painel de administração
-const ADMIN_PASSWORD = 'sua_senha_secreta';
+const ADMIN_PASSWORD = 'LigadeBasquete';
 
 // Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
