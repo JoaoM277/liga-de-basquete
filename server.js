@@ -103,14 +103,9 @@ app.post('/upload', upload.single('comprovante'), async (req, res) => {
 });
 
 // Rota de acesso ao painel de administração
-app.get('/admin', async (req, res) => {
-    try {
-        const inscricoes = await Inscricao.find({}); // O nome do modelo que você criou
-        res.render('admin', { inscricoes: inscricoes });
-    } catch (err) {
-        console.error('Erro ao buscar inscricoes:', err);
-        res.status(500).send('Erro interno do servidor');
-    }
+app.get('/admin', (req, res) => {
+    // Apenas envia o arquivo HTML estático. O JavaScript na página fará o resto.
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
 // Rota para processar o login e enviar os dados
