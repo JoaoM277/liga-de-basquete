@@ -11,22 +11,16 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Senha para o painel de administração
-const ADMIN_PASSWORD = 'LigadeBasquete';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sua_senha_secreta';
 
 // Configuração do MongoDB Atlas
-// Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI)
-    .then(() => {
-        console.log('Conectado ao MongoDB Atlas!');
-        // O servidor só começa a ouvir requisições APÓS a conexão ser estabelecida
-        app.listen(PORT, () => {
-            console.log(`Servidor rodando em http://localhost:${PORT}`);
-        });
-    })
+mongoose.connect(MONGODB_URI, {
+    connectTimeoutMS: 30000, // Aumenta o tempo de espera da conexão para 30s
+    socketTimeoutMS: 45000 // Aumenta o tempo limite para a operação
+}).then(() => console.log('Conectado ao MongoDB Atlas!'))
     .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
 // Esquema do Mongoose
@@ -98,20 +92,19 @@ app.post('/upload', upload.single('comprovante'), async (req, res) => {
     }
 
     const { inscricao_id } = req.query;
-    const comprovanteUrl = req.file.path; // O Multer-Cloudinary nos dá o URL
+    const comprovanteUrl = req.file.path;
 
     try {
         await Inscricao.findByIdAndUpdate(inscricao_id, { comprovante_nome_arquivo: comprovanteUrl });
         res.sendFile(path.join(__dirname, 'public', 'sucesso.html'));
     } catch (err) {
-        console.error('Erro ao atualizar a inscrição:', err);
+        console.error('Erro ao atualizar a inscrição com o comprovante:', err);
         res.status(500).send('Erro no servidor ao processar o comprovante.');
     }
 });
 
 // Rota de acesso ao painel de administração
 app.get('/admin', (req, res) => {
-    // Apenas envia o arquivo HTML estático. O JavaScript na página fará o resto.
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
@@ -131,6 +124,5 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// Exporta o aplicativo Express para que o Vercel possa usá-lo
+module.exports = app;
