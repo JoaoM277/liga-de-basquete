@@ -89,9 +89,6 @@
                 const row = document.createElement('tr');
 
                 // Converte os dados de JSON para string
-                const turnosFormatados = JSON.parse(inscricao.turnos).join(', ');
-                const diasFormatados = JSON.parse(inscricao.dias).join(', ');
-
                 row.innerHTML = `
                     <td><input type="checkbox" id="pago-${inscricao.id}"></td>
                     <td>${inscricao.nome_completo}</td>
