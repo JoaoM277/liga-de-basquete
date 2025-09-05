@@ -22,6 +22,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const inscricaoSchema = new mongoose.Schema({
     nome_completo: String,
     idade: Number,
+    sexo: String,
     posicao: String,
     tempo_jogando: String,
     contato: String,
@@ -86,12 +87,12 @@ app.get('/', (req, res) => {
 // Rota de Inscrição
 app.post('/inscrever', async (req, res) => {
     await connectDb(); // Garante que a conexão está ativa antes da operação
-    const { nome_completo, idade, posicao, tempo_jogando, contato, turnos, dias } = req.body;
+    const { nome_completo, idade, posicao, tempo_jogando, contato, turnos, dias, sexo } = req.body;
     
     const novaInscricao = new Inscricao({
         nome_completo, idade, posicao, tempo_jogando, contato,
         turnos: turnos,
-        dias: dias
+        dias: dias, sexo
     });
 
     try {
