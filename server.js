@@ -44,7 +44,14 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'liga-basquete-comprovantes',
-        format: async (req, file) => 'jpg',
+        format: async (req, file) => {
+    const ext = path.extname(file.originalname).substring(1);
+    const supportedFormats = ['jpg', 'jpeg', 'png', 'pdf'];
+    if (supportedFormats.includes(ext.toLowerCase())) {
+        return ext.toLowerCase();
+    }
+    return 'jpg'; // Formato padrão caso seja desconhecido
+     },
         public_id: (req, file) => `comprovante-${Date.now()}`
     }
 });
@@ -135,6 +142,15 @@ app.post('/admin/login', async (req, res) => {
         }
     } else {
         res.status(401).send('Senha incorreta.');
+    }
+});
+app.get('/api/inscricoes', async (req, res) => {
+    try {
+        const inscricoes = await Inscricao.find({});
+        res.status(200).json(inscricoes);
+    } catch (error) {
+        console.error('Erro ao buscar inscrições:', error);
+        res.status(500).json({ message: 'Erro ao buscar inscrições.' });
     }
 });
 

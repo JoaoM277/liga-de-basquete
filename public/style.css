@@ -294,7 +294,17 @@ input[type="checkbox"] {
     height: 20px;
     accent-color: var(--laranja);
 }
+.gender-radio {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+}
 
+.gender-radio div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 /* Estilo do Botão de Envio */
 .submit-button {
     width: 100%;

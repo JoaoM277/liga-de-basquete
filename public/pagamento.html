@@ -32,6 +32,11 @@
         .pix-info h3 {
             color: var(--dourado);
         }
+        .Input-Button {
+        padding: px 60px;
+        font-size: 1.2rem;
+        }
+        
     </style>
 </head>
 <body>
@@ -50,20 +55,38 @@
     <h3>Envio do Comprovante</h3>
     <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="nome_completo" id="nome-completo-hidden">
-        <input type="file" name="comprovante" required>
+        <input class="Input-Button" type="file" name="comprovante" accept=".jpg, .jpeg, .png, .pdf" required>
         <br><br>
         <button type="submit" class="submit-button">Enviar Comprovante</button>
     </form>
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const comprovanteInput = document.getElementById("comprovante-input");
+        const submitBtn = document.getElementById("submit-comprovante-btn");
+
+        submitBtn.disabled = true;
+
+        comprovanteInput.addEventListener("change", function() {
+            if (this.files.length > 0) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        });
+    });
+    
     const urlParams = new URLSearchParams(window.location.search);
     const inscricaoId = urlParams.get('inscricao_id');
     
     // Adicione o ID da inscrição na URL do formulário de upload
     const uploadForm = document.getElementById('uploadForm');
     uploadForm.action = `/upload?inscricao_id=${inscricaoId}`;
+
 </script>
+
+
 
 </body>
 </html>
