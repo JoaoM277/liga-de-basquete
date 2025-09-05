@@ -34,7 +34,6 @@
             .list-header { flex-direction: column; align-items: flex-start; }
         }
 
-        /* Estilo de impressão */
         @media print {
             body > *:not(.admin-container) { display: none; }
             .admin-container { box-shadow: none; max-width: 100%; margin: 0; padding: 0; }
@@ -69,6 +68,7 @@
                     <th>Idade</th>
                     <th>Posição</th>
                     <th>Tempo Jogando</th>
+                    <th>Sexo</th>
                     <th>Turno</th>
                     <th>Dias</th>
                     <th>Contato</th>
@@ -91,6 +91,7 @@
                     <th>Idade</th>
                     <th>Posição</th>
                     <th>Tempo Jogando</th>
+                    <th>Sexo</th>
                     <th>Turno</th>
                     <th>Dias</th>
                     <th>Contato</th>
@@ -120,41 +121,41 @@
             const tabelaFeminina = document.getElementById('inscricoesFemininas');
 
             data.forEach(inscricao => {
-                const row = document.createElement('tr');
-                const turnosFormatados = inscricao.turnos.join(', ');
-                const diasFormatados = inscricao.dias.join(', ');
-
-                const comprovanteLink = inscricao.comprovante_nome_arquivo
-                    ? `<a href="${inscricao.comprovante_nome_arquivo}" target="_blank">Visualizar</a>`
-                    : 'N/A';
-
-                row.innerHTML = `
+                const newRow = document.createElement('tr');
+                
+                const turnosFormatados = inscricao.turnos ? inscricao.turnos.join(', ') : 'N/A';
+                const diasFormatados = inscricao.dias ? inscricao.dias.join(', ') : 'N/A';
+                const comprovanteLink = inscricao.comprovante_nome_arquivo ? 
+                    `<a href="${inscricao.comprovante_nome_arquivo}" target="_blank">Visualizar</a>` : 
+                    'N/A';
+                
+                newRow.innerHTML = `
                     <td><input type="checkbox" id="pago-${inscricao._id}"></td>
                     <td>${inscricao.nome_completo}</td>
                     <td>${inscricao.idade}</td>
                     <td>${inscricao.posicao}</td>
                     <td>${inscricao.tempo_jogando}</td>
+                    <td>${inscricao.sexo}</td>
                     <td>${turnosFormatados}</td>
                     <td>${diasFormatados}</td>
                     <td>${inscricao.contato}</td>
                     <td>${comprovanteLink}</td>
                 `;
-
+                
                 if (inscricao.sexo === 'Masculino') {
-                    tabelaMasculina.appendChild(row);
+                    tabelaMasculina.appendChild(newRow);
                 } else if (inscricao.sexo === 'Feminino') {
-                    tabelaFeminina.appendChild(row);
+                    tabelaFeminina.appendChild(newRow);
                 }
             });
         } else {
             alert('Senha incorreta!');
         }
     });
-    
+
     function imprimirTodasTabelas() {
         window.print();
     }
 </script>
-
 </body>
 </html>
