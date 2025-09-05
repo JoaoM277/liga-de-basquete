@@ -6,7 +6,8 @@
     <title>Painel Administrativo - Liga de Basquete</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .admin-container {
+        body { background-color: #222; padding: 20px; }
+        .login-container, .admin-container {
             max-width: 90%;
             margin: 40px auto;
             padding: 40px;
@@ -15,224 +16,143 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             color: #fff;
         }
-
-        .admin-container h2 {
-            font-size: 2rem;
-            color: #e8590c;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .admin-container .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-
-        .admin-container .list-header h3 {
-            font-size: 1.5rem;
-            color: #d4af37;
-        }
-
-        .admin-container .button-container {
-            display: flex;
-            gap: 10px;
-        }
-
-        .admin-container button {
-            background-color: #e8590c;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .admin-container button:hover {
-            background-color: #f48024;
-        }
-
-        .admin-container table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .admin-container th, .admin-container td {
-            padding: 12px;
-            border: 1px solid #444;
-            text-align: left;
-            word-wrap: break-word;
-        }
-
-        .admin-container th {
-            background-color: #e8590c;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .admin-container tr:nth-child(even) {
-            background-color: #3f3f3f;
-        }
-
-        .admin-container .table-wrapper {
-            overflow-x: auto;
-            margin-bottom: 40px;
-        }
-
-        /* Estilos específicos para a coluna de Ações */
-        .admin-container .actions-column {
-            display: flex;
-            gap: 5px;
-        }
-
-        .admin-container .actions-column a,
-        .admin-container .actions-column button {
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            font-size: 1rem;
-            color: #d4af37;
-        }
-
-        .admin-container .actions-column a:hover,
-        .admin-container .actions-column button:hover {
-            color: #fff;
-        }
+        .login-container h2, .admin-container h2 { font-size: 2rem; color: var(--laranja); text-align: center; margin-bottom: 20px; }
+        .login-container input { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: none; }
+        .login-container button { width: 100%; padding: 10px; background-color: var(--laranja); color: black; font-weight: bold; border-radius: 5px; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #444; text-align: left; word-wrap: break-word; }
+        th { background-color: var(--laranja); color: #fff; font-weight: bold; }
+        tr:nth-child(even) { background-color: #3f3f3f; }
+        .table-wrapper { overflow-x: auto; margin-bottom: 40px; }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 10px; }
+        .list-header h3 { font-size: 1.5rem; color: var(--dourado); }
+        .button-container { display: flex; gap: 10px; }
 
         @media (max-width: 768px) {
-            .admin-container {
-                padding: 20px;
-            }
+            .admin-container { padding: 20px; }
+            .admin-container h2 { font-size: 1.5rem; }
+            .list-header { flex-direction: column; align-items: flex-start; }
+        }
 
-            .admin-container h2 {
-                font-size: 1.5rem;
-            }
-
-            .admin-container .list-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        /* Estilo de impressão */
+        @media print {
+            body > *:not(.admin-container) { display: none; }
+            .admin-container { box-shadow: none; max-width: 100%; margin: 0; padding: 0; }
+            button { display: none; }
+            a { text-decoration: none; color: black; }
         }
     </style>
 </head>
 <body>
 
-<div class="admin-container">
+<div class="login-container" id="login-form">
+    <h2>Acesso Restrito</h2>
+    <form id="loginForm">
+        <input type="password" id="password" placeholder="Digite a senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+
+<div class="admin-container" id="admin-panel" style="display: none;">
     <h2>PAINEL ADMINISTRATIVO</h2>
+    <button onclick="imprimirTodasTabelas()">Imprimir Tudo</button>
 
     <div class="list-header">
         <h3>Atletas Masculinos</h3>
-        <div class="button-container">
-            <button onclick="imprimirTabela('tabelaMasculina')">Imprimir Lista</button>
-        </div>
     </div>
     <div class="table-wrapper">
         <table id="tabelaMasculina">
             <thead>
                 <tr>
+                    <th>Pago</th>
                     <th>Nome</th>
                     <th>Idade</th>
                     <th>Posição</th>
                     <th>Tempo Jogando</th>
-                    <th>Contato</th>
                     <th>Turno</th>
                     <th>Dias</th>
+                    <th>Contato</th>
+                    <th>Comprovante</th>
                 </tr>
             </thead>
-            <tbody>
-                </tbody>
+            <tbody id="inscricoesMasculinas"></tbody>
         </table>
     </div>
 
     <div class="list-header">
         <h3>Atletas Femininos</h3>
-        <div class="button-container">
-            <button onclick="imprimirTabela('tabelaFeminina')">Imprimir Lista</button>
-        </div>
     </div>
     <div class="table-wrapper">
         <table id="tabelaFeminina">
             <thead>
                 <tr>
+                    <th>Pago</th>
                     <th>Nome</th>
                     <th>Idade</th>
                     <th>Posição</th>
                     <th>Tempo Jogando</th>
-                    <th>Contato</th>
                     <th>Turno</th>
                     <th>Dias</th>
+                    <th>Contato</th>
+                    <th>Comprovante</th>
                 </tr>
             </thead>
-            <tbody>
-                </tbody>
+            <tbody id="inscricoesFemininas"></tbody>
         </table>
     </div>
-
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const response = await fetch('/api/inscricoes');
-            if (!response.ok) {
-                throw new Error('Erro ao carregar os dados.');
-            }
-            const inscricoes = await response.json();
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const password = document.getElementById('password').value;
+        const response = await fetch('/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
 
-            const tabelaMasculina = document.getElementById('tabelaMasculina').getElementsByTagName('tbody')[0];
-            const tabelaFeminina = document.getElementById('tabelaFeminina').getElementsByTagName('tbody')[0];
+            const tabelaMasculina = document.getElementById('inscricoesMasculinas');
+            const tabelaFeminina = document.getElementById('inscricoesFemininas');
 
-            inscricoes.forEach(inscrito => {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <td>${inscrito.nome_completo}</td>
-                    <td>${inscrito.idade}</td>
-                    <td>${inscrito.posicao}</td>
-                    <td>${inscrito.tempo_jogando}</td>
-                    <td>${inscrito.contato}</td>
-                    <td>${inscrito.turnos ? inscrito.turnos.join(', ') : 'N/A'}</td>
-                    <td>${inscrito.dias ? inscrito.dias.join(', ') : 'N/A'}</td>
+            data.forEach(inscricao => {
+                const row = document.createElement('tr');
+                const turnosFormatados = inscricao.turnos.join(', ');
+                const diasFormatados = inscricao.dias.join(', ');
+
+                const comprovanteLink = inscricao.comprovante_nome_arquivo
+                    ? `<a href="${inscricao.comprovante_nome_arquivo}" target="_blank">Visualizar</a>`
+                    : 'N/A';
+
+                row.innerHTML = `
+                    <td><input type="checkbox" id="pago-${inscricao._id}"></td>
+                    <td>${inscricao.nome_completo}</td>
+                    <td>${inscricao.idade}</td>
+                    <td>${inscricao.posicao}</td>
+                    <td>${inscricao.tempo_jogando}</td>
+                    <td>${turnosFormatados}</td>
+                    <td>${diasFormatados}</td>
+                    <td>${inscricao.contato}</td>
+                    <td>${comprovanteLink}</td>
                 `;
-                
-                if (inscrito.sexo === 'Masculino') {
-                    tabelaMasculina.appendChild(newRow);
-                } else if (inscrito.sexo === 'Feminino') {
-                    tabelaFeminina.appendChild(newRow);
+
+                if (inscricao.sexo === 'Masculino') {
+                    tabelaMasculina.appendChild(row);
+                } else if (inscricao.sexo === 'Feminino') {
+                    tabelaFeminina.appendChild(row);
                 }
             });
-
-        } catch (error) {
-            console.error('Falha ao carregar inscrições:', error);
-            alert('Não foi possível carregar as inscrições. Tente novamente mais tarde.');
+        } else {
+            alert('Senha incorreta!');
         }
     });
-
-    function imprimirTabela(tabelaId) {
-        const tabela = document.getElementById(tabelaId);
-        if (!tabela) {
-            alert("Tabela não encontrada.");
-            return;
-        }
-
-        const win = window.open('', 'print');
-        win.document.write('<html><head><title>Imprimir</title>');
-        win.document.write('<style>');
-        win.document.write('body { font-family: sans-serif; }');
-        win.document.write('table { width: 100%; border-collapse: collapse; margin-top: 20px; }');
-        win.document.write('th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }');
-        win.document.write('th { background-color: #f2f2f2; }');
-        win.document.write('</style>');
-        win.document.write('</head><body>');
-        win.document.write('<h1>Lista de Inscrições</h1>');
-        win.document.write(tabela.outerHTML);
-        win.document.write('</body></html>');
-        win.document.close();
-        win.print();
+    
+    function imprimirTodasTabelas() {
+        window.print();
     }
 </script>
 
