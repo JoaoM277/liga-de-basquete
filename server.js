@@ -45,6 +45,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'liga-basquete-comprovantes',
+        resource_type: ext === 'pdf' ? 'raw' : 'image',
         format: async (req, file) => {
     const ext = path.extname(file.originalname).substring(1);
     const supportedFormats = ['jpg', 'jpeg', 'png', 'pdf'];
