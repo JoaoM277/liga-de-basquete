@@ -135,7 +135,7 @@ app.post('/admin/login', async (req, res) => {
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
         try {
-            const inscricoes = await Inscricao.find({});
+            const inscricoes = await Inscricao.find({ comprovante_nome_arquivo: { $ne: null } });
             res.json(inscricoes);
         } catch (err) {
             console.error('Erro ao buscar dados:', err);
