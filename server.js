@@ -1,3 +1,4 @@
+// Importações
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -12,14 +13,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Senha para o painel de administração
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'LigadeBasquete';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sua_senha_secreta';
 
 // Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI, {
-    connectTimeoutMS: 30000,
-    socketTimeoutMS: 45000
-}).then(() => console.log('Conectado ao MongoDB Atlas!'))
+mongoose.connect(MONGODB_URI)
+    .then(() => console.log('Conectado ao MongoDB Atlas!'))
     .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
 // Esquema do Mongoose
@@ -56,7 +55,7 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
-// Middleware para servir arquivos estáticos (HTML, CSS, JS e imagens)
+// Middleware para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -98,7 +97,7 @@ app.post('/login-inscricao', async (req, res) => {
     try {
         const inscricao = await Inscricao.findOne({ nome_completo, senha_unica });
         if (inscricao) {
-            res.redirect(`/editar_inscricao.html?inscricao_id=${inscricao._id}`);
+            res.redirect(`/pagamento.html?inscricao_id=${inscricao._id}`); // Redireciona para a página de pagamento
         } else {
             res.status(401).send('Nome de usuário ou senha incorretos.');
         }
@@ -124,6 +123,22 @@ app.get('/api/inscricao/:id', async (req, res) => {
     }
 });
 
+// Nova rota para verificar o status do pagamento
+app.get('/api/status-pagamento/:id', async (req, res) => {
+    await connectDb();
+    try {
+        const inscricao = await Inscricao.findById(req.params.id, 'comprovante_nome_arquivo');
+        if (inscricao) {
+            res.status(200).json({ comprovante_enviado: !!inscricao.comprovante_nome_arquivo });
+        } else {
+            res.status(404).send('Inscrição não encontrada.');
+        }
+    } catch (err) {
+        console.error('Erro ao buscar status do pagamento:', err);
+        res.status(500).send('Erro interno do servidor.');
+    }
+});
+
 // Rota de atualização da inscrição
 app.post('/salvar-edicao', async (req, res) => {
     await connectDb();
@@ -133,7 +148,7 @@ app.post('/salvar-edicao', async (req, res) => {
         await Inscricao.findByIdAndUpdate(inscricao_id, {
             nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias
         });
-        res.redirect('/sucesso.html');
+        res.redirect(`/pagamento.html?inscricao_id=${inscricao_id}`); // Redireciona para a página de pagamento
     } catch (err) {
         console.error('Erro ao atualizar inscrição:', err);
         res.status(500).send('Erro no servidor ao atualizar a inscrição.');
@@ -170,7 +185,7 @@ app.post('/admin/login', async (req, res) => {
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
         try {
-            const inscricoes = await Inscricao.find({ comprovante_nome_arquivo: { $ne: null } });
+            const inscricoes = await Inscricao.find({});
             res.json(inscricoes);
         } catch (err) {
             console.error('Erro ao buscar dados:', err);

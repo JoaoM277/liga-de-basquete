@@ -6,129 +6,39 @@
     <title>Confirmação de Inscrição</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .pagamento-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 40px;
-            background-color: var(--cinza-escuro);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            text-align: center;
-        }
-        .pagamento-container h2 {
-            color: var(--laranja);
-            margin-bottom: 20px;
-        }
-        .pagamento-container p {
-            color: var(--branco);
-            margin-bottom: 20px;
-        }
-        .pix-info {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        .pix-info h3 {
-            color: var(--dourado);
-        }
-        /* Estilo para o campo de arquivo */
-        .file-input {
-            padding: 10px 20px;
-            font-size: 1rem;
-            border: 1px solid var(--laranja-claro);
-            border-radius: 5px;
-            background-color: #3f3f3f;
-            color: var(--branco);
-            cursor: pointer;
-            width: fit-content;
-            margin: 0 auto;
-        }
-        .file-input:hover {
-            background-color: #555;
-        }
-        .file-input::-webkit-file-upload-button {
-            visibility: hidden;
-        }
-        .file-input::before {
-            content: 'Selecionar Arquivo';
-            display: inline-block;
-            background: linear-gradient(top, #f9f9f9, #e3e3e3);
-            border: 1px solid #999;
-            border-radius: 3px;
-            padding: 5px 8px;
-            outline: none;
-            white-space: nowrap;
-            -webkit-user-select: none;
-            cursor: pointer;
-            text-shadow: 1px 1px #fff;
-            font-weight: 700;
-            font-size: 10pt;
-        }
-        .file-input:hover::before {
-            border-color: black;
-        }
-        .file-input:active::before {
-            background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-        }
-        /* Estilo para a caixa da senha única */
-        .senha-unica-container {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #1a1a1a;
-            border-radius: 10px;
-        }
-        .senha-unica-container h3 {
-            color: var(--dourado);
-        }
-        .senha-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            background-color: #333;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .senha-box span {
-            font-size: 1.2rem;
-            color: var(--laranja);
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        .senha-box button {
-            padding: 5px 10px;
-            border: none;
-            background-color: var(--dourado);
-            color: black;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        
+        /* ... Estilos já existentes ... */
     </style>
 </head>
 <body>
 
 <div class="pagamento-container">
-    <h2>Sua Inscrição está quase completa!</h2>
-    <p>Para garantir a sua vaga na liga, realize o pagamento via Pix. Sua inscrição será confirmada após o envio e validação do comprovante.</p>
-    
-    <div class="pix-info">
-        <h3>Dados para o Pix</h3>
-        <p><strong>Chave Pix:</strong> 627.851.673-09</p>
-        <p><strong>Nome do Recebedor:</strong> Thiago Silva costa</p>
-        <p><strong>Valor:</strong> R$ 20,00</p>
+    <div id="pagamento-form-section">
+        <h2>Sua Inscrição está quase completa!</h2>
+        <p>Para garantir a sua vaga na liga, realize o pagamento via Pix. Sua inscrição será confirmada após o envio e validação do comprovante.</p>
+        
+        <div class="pix-info">
+            <h3>Dados para o Pix</h3>
+            <p><strong>Chave Pix:</strong>627.851.673-09</p>
+            <p><strong>Nome do Recebedor:</strong> Thiago Silva costa</p>
+            <p><strong>Valor:</strong> R$ 20,00</p>
+        </div>
+
+        <h3>Envio do Comprovante</h3>
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="inscricao_id" id="inscricao-id">
+            <input type="file" name="comprovante" id="comprovante-input" accept=".jpg, .jpeg, .png, .pdf" required>
+            <br><br>
+            <p>Dê preferência a comprovantes em formato de imagem, caso o seu seja um PDF favor utilizar um Screenshot</p>
+            <br><br>
+            <button type="submit" id="submit-comprovante-btn" class="submit-button">Enviar Comprovante</button>
+        </form>
     </div>
 
-    <h3>Envio do Comprovante</h3>
-    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="inscricao_id" id="inscricao-id">
-        <input type="file" name="comprovante" id="comprovante-input" accept=".jpg, .jpeg, .png, .pdf" required>
-        <br><br>
-        <p>Dê preferência a comprovantes em formato de imagem, caso o seu seja um PDF favor utilizar um Screenshot</p>
-        <br><br>
-        <button type="submit" id="submit-comprovante-btn" class="submit-button">Enviar Comprovante</button>
-    </form>
+    <div id="pagamento-confirmado-section" style="display: none;">
+        <h2 style="color: var(--dourado);">Comprovante Já Enviado!</h2>
+        <p>Seu comprovante de pagamento já foi recebido. Assim que ele for validado, entraremos em contato.</p>
+        <p>Obrigado pela sua inscrição.</p>
+    </div>
 
     <div class="senha-unica-container">
         <h3>Sua Senha de Uso Único</h3>
@@ -141,31 +51,43 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Obter os parâmetros da URL
+    document.addEventListener("DOMContentLoaded", async function() {
         const urlParams = new URLSearchParams(window.location.search);
         const inscricaoId = urlParams.get('inscricao_id');
         const senhaUnica = urlParams.get('senha_unica');
-        
-        // Habilitar/desabilitar botão de envio
+
+        // Mostra a senha única
+        if (senhaUnica) {
+            document.getElementById('senha-unica-display').textContent = senhaUnica;
+        }
+
+        if (inscricaoId) {
+            // Preenche o ID no formulário de upload
+            document.getElementById('inscricao-id').value = inscricaoId;
+            document.getElementById('uploadForm').action = `/upload?inscricao_id=${inscricaoId}`;
+
+            // Verifica o status do pagamento
+            try {
+                const response = await fetch(`/api/status-pagamento/${inscricaoId}`);
+                const data = await response.json();
+
+                if (data.comprovante_enviado) {
+                    document.getElementById('pagamento-form-section').style.display = 'none';
+                    document.getElementById('pagamento-confirmado-section').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Erro ao verificar status do pagamento:', error);
+            }
+        }
+
+        // Lógica para habilitar/desabilitar botão
         const comprovanteInput = document.getElementById("comprovante-input");
         const submitBtn = document.getElementById("submit-comprovante-btn");
-        submitBtn.disabled = true;
-
-        comprovanteInput.addEventListener("change", function() {
-            submitBtn.disabled = !this.files.length;
-        });
-
-        // Preencher o ID e a senha na página
-        if (inscricaoId) {
-            const uploadForm = document.getElementById('uploadForm');
-            uploadForm.action = `/upload?inscricao_id=${inscricaoId}`;
-            
-            document.getElementById('inscricao-id').value = inscricaoId;
-
-            if (senhaUnica) {
-                document.getElementById('senha-unica-display').textContent = senhaUnica;
-            }
+        if(submitBtn) {
+            submitBtn.disabled = true;
+            comprovanteInput.addEventListener("change", function() {
+                submitBtn.disabled = !this.files.length;
+            });
         }
     });
 
