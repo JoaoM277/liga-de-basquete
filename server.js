@@ -1,22 +1,29 @@
+// Importações
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const { v2: cloudinary } = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'LigadeBasquete';
 
+// Senha para o painel de administração
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sua_senha_secreta';
+
+// Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI)
-    .then(() => console.log('Conectado ao MongoDB Atlas!'))
+mongoose.connect(MONGODB_URI, {
+    connectTimeoutMS: 30000,
+    socketTimeoutMS: 45000
+}).then(() => console.log('Conectado ao MongoDB Atlas!'))
     .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
+// Esquema do Mongoose
 const inscricaoSchema = new mongoose.Schema({
     nome_completo: String,
     idade: Number,
@@ -32,29 +39,25 @@ const inscricaoSchema = new mongoose.Schema({
 });
 const Inscricao = mongoose.model('Inscricao', inscricaoSchema, 'inscricoes');
 
+// Configuração do Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// Configuração do Multer para o Cloudinary
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'liga-basquete-comprovantes',
-        format: async (req, file) => {
-            const ext = path.extname(file.originalname).substring(1);
-            const supportedFormats = ['jpg', 'jpeg', 'png', 'pdf'];
-            if (supportedFormats.includes(ext.toLowerCase())) {
-                return ext.toLowerCase();
-            }
-            return 'jpg';
-        },
+        format: async (req, file) => 'jpg',
         public_id: (req, file) => `comprovante-${Date.now()}`
     }
 });
 const upload = multer({ storage: storage });
 
+// Middleware para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -176,6 +179,7 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
+// Conecta ao banco de dados e exporta a aplicação Express
 async function connectDb() {
     if (mongoose.connection.readyState !== 1) {
         try {
