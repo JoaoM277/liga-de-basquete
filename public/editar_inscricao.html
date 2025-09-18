@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Inscrição</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .edit-form-card {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: var(--cinza-escuro);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .edit-form-card h2 {
+            text-align: center;
+            color: var(--laranja);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="edit-form-card">
+    <h2>Editar Minha Inscrição</h2>
+    <form id="editForm" action="/salvar-edicao" method="POST">
+        <input type="hidden" name="inscricao_id" id="inscricao-id">
+
+        <div class="form-group">
+            <label for="nome_completo">Nome Completo</label>
+            <input type="text" id="nome_completo" name="nome_completo" required>
+        </div>
+        <div class="form-group">
+            <label for="idade">Idade</label>
+            <input type="number" id="idade" name="idade" min="15" required>
+        </div>
+        <div class="form-group">
+            <label for="posicao">Posição</label>
+            <input type="text" id="posicao" name="posicao" placeholder="Ex: Armador, Ala, Pivô" required>
+        </div>
+        <div class="form-group">
+            <label for="tempo_jogando">Tempo que Joga Basquete</label>
+            <input type="text" id="tempo_jogando" name="tempo_jogando" placeholder="Ex: 5 anos, desde a infância" required>
+        </div>
+        <div class="form-group">
+            <label for="contato">Telefone para Contato</label>
+            <input type="tel" id="contato" name="contato" placeholder="Ex: (xx) xxxxx-xxxx" required>
+        </div>
+
+        <div class="form-group">
+            <label>Sexo</label>
+            <div class="gender-radio">
+                <div>
+                    <input type="radio" id="masculino" name="sexo" value="Masculino" required>
+                    <label for="masculino">Masculino</label>
+                </div>
+                <div>
+                    <input type="radio" id="feminino" name="sexo" value="Feminino" required>
+                    <label for="feminino">Feminino</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Turno de Disponibilidade</label>
+            <div class="turno-checkboxes">
+                <div><input type="checkbox" id="manha" name="turnos[]" value="Manhã"><label for="manha">Manhã</label></div>
+                <div><input type="checkbox" id="tarde" name="turnos[]" value="Tarde"><label for="tarde">Tarde</label></div>
+                <div><input type="checkbox" id="noite" name="turnos[]" value="Noite"><label for="noite">Noite</label></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <details class="dias-expansivel">
+                <summary>Melhores Dias da Semana</summary>
+                <div class="dias-checkboxes">
+                    <div><input type="checkbox" id="domingo" name="dias[]" value="domingo"> <label for="domingo">Dom</label></div>
+                    <div><input type="checkbox" id="segunda" name="dias[]" value="segunda"> <label for="segunda">Seg</label></div>
+                    <div><input type="checkbox" id="terca" name="dias[]" value="terca"> <label for="terca">Ter</label></div>
+                    <div><input type="checkbox" id="quarta" name="dias[]" value="quarta"> <label for="quarta">Qua</label></div>
+                    <div><input type="checkbox" id="quinta" name="dias[]" value="quinta"> <label for="quinta">Qui</label></div>
+                    <div><input type="checkbox" id="sexta" name="dias[]" value="sexta"> <label for="sexta">Sex</label></div>
+                    <div><input type="checkbox" id="sabado" name="dias[]" value="sabado"> <label for="sabado">Sáb</label></div>
+                </div>
+            </details>
+        </div>
+
+        <button type="submit" class="submit-button">Salvar Alterações</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const inscricaoId = urlParams.get('inscricao_id');
+
+        if (inscricaoId) {
+            try {
+                // Preenche o campo oculto com o ID
+                document.getElementById('inscricao-id').value = inscricaoId;
+
+                // Faz a requisição para buscar os dados do usuário
+                const response = await fetch(`/api/inscricao/${inscricaoId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados da inscrição.');
+                }
+                const data = await response.json();
+
+                // Preenche os campos do formulário com os dados
+                document.getElementById('nome_completo').value = data.nome_completo;
+                document.getElementById('idade').value = data.idade;
+                document.getElementById('posicao').value = data.posicao;
+                document.getElementById('tempo_jogando').value = data.tempo_jogando;
+                document.getElementById('contato').value = data.contato;
+                
+                // Preenche o gênero
+                if (data.sexo) {
+                    document.getElementById(data.sexo.toLowerCase()).checked = true;
+                }
+
+                // Preenche os turnos
+                if (data.turnos && Array.isArray(data.turnos)) {
+                    data.turnos.forEach(turno => {
+                        const checkbox = document.getElementById(turno.toLowerCase());
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+
+                // Preenche os dias da semana
+                if (data.dias && Array.isArray(data.dias)) {
+                    data.dias.forEach(dia => {
+                        const checkbox = document.getElementById(dia.toLowerCase());
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+
+            } catch (error) {
+                console.error('Falha ao carregar a inscrição:', error);
+                alert('Erro ao carregar os dados da inscrição. Tente novamente.');
+            }
+        } else {
+            alert('ID da inscrição não encontrado.');
+            window.location.href = '/'; // Redireciona para a página inicial se não houver ID
+        }
+    });
+</script>
+
+</body>
+</html>

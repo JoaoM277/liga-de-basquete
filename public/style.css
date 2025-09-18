@@ -471,3 +471,31 @@ footer {
         gap: 10px;
     }
 }
+
+/* --- Seção de Login para Inscrição --- */
+.login-section {
+    padding: 80px 20px;
+    background-color: var(--preto);
+}
+
+.login-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: var(--cinza-escuro);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.login-card h2 {
+    font-size: 2rem;
+    color: var(--laranja);
+    margin-bottom: 10px;
+}
+
+.login-card p {
+    font-size: 1rem;
+    color: var(--branco);
+    margin-bottom: 20px;
+}
