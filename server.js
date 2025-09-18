@@ -1,4 +1,3 @@
-// Importações
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -12,16 +11,13 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Senha para o painel de administração
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sua_senha_secreta';
 
-// Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGODB_URI)
     .then(() => console.log('Conectado ao MongoDB Atlas!'))
     .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
-// Esquema do Mongoose
 const inscricaoSchema = new mongoose.Schema({
     nome_completo: String,
     idade: Number,
@@ -37,14 +33,12 @@ const inscricaoSchema = new mongoose.Schema({
 });
 const Inscricao = mongoose.model('Inscricao', inscricaoSchema, 'inscricoes');
 
-// Configuração do Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Configuração do Multer para o Cloudinary
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
@@ -55,22 +49,18 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
-// Middleware para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Rota para a página inicial
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Rota de Inscrição
 app.post('/inscrever', async (req, res) => {
     await connectDb();
     const { nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias } = req.body;
     
-    // Gerar uma senha mais simples e fácil de memorizar
     const senha_unica = Math.random().toString(36).substring(2, 8);
 
     const novaInscricao = new Inscricao({
@@ -89,7 +79,6 @@ app.post('/inscrever', async (req, res) => {
     }
 });
 
-// Rota de login para continuar a inscrição
 app.post('/login-inscricao', async (req, res) => {
     await connectDb();
     const { nome_completo, senha_unica } = req.body;
@@ -107,7 +96,6 @@ app.post('/login-inscricao', async (req, res) => {
     }
 });
 
-// Rota para buscar os dados de uma única inscrição
 app.get('/api/inscricao/:id', async (req, res) => {
     await connectDb();
     try {
@@ -123,7 +111,6 @@ app.get('/api/inscricao/:id', async (req, res) => {
     }
 });
 
-// Nova rota para verificar o status do pagamento
 app.get('/api/status-pagamento/:id', async (req, res) => {
     await connectDb();
     try {
@@ -139,7 +126,6 @@ app.get('/api/status-pagamento/:id', async (req, res) => {
     }
 });
 
-// Rota de atualização da inscrição
 app.post('/salvar-edicao', async (req, res) => {
     await connectDb();
     const { inscricao_id, nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias } = req.body;
@@ -148,14 +134,13 @@ app.post('/salvar-edicao', async (req, res) => {
         await Inscricao.findByIdAndUpdate(inscricao_id, {
             nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias
         });
-        res.redirect(`/pagamento.html?inscricao_id=${inscricao_id}`); // Redireciona para a página de pagamento
+        res.redirect(`/pagamento.html?inscricao_id=${inscricao_id}`);
     } catch (err) {
         console.error('Erro ao atualizar inscrição:', err);
         res.status(500).send('Erro no servidor ao atualizar a inscrição.');
     }
 });
 
-// Rota de upload do comprovante
 app.post('/upload', upload.single('comprovante'), async (req, res) => {
     await connectDb();
     if (!req.file) {
@@ -174,12 +159,10 @@ app.post('/upload', upload.single('comprovante'), async (req, res) => {
     }
 });
 
-// Rota de acesso ao painel de administração
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// Rota para processar o login e enviar os dados
 app.post('/admin/login', async (req, res) => {
     await connectDb();
     const { password } = req.body;
