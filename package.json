@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Landing page para a liga de basquete",
   "main": "server.js",
+   "type": "module",
   "scripts": {
     "start": "node server.js"
   },
