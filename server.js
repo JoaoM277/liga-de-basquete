@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
+const { v2: cloudinary } = require('cloudinary');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
@@ -11,8 +11,10 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Senha para o painel de administração
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'LigadeBasquete';
 
+// Configuração do MongoDB Atlas
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose.connect(MONGODB_URI, {
     connectTimeoutMS: 30000,
@@ -20,6 +22,7 @@ mongoose.connect(MONGODB_URI, {
 }).then(() => console.log('Conectado ao MongoDB Atlas!'))
     .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
+// Esquema do Mongoose
 const inscricaoSchema = new mongoose.Schema({
     nome_completo: String,
     idade: Number,
@@ -35,12 +38,14 @@ const inscricaoSchema = new mongoose.Schema({
 });
 const Inscricao = mongoose.model('Inscricao', inscricaoSchema, 'inscricoes');
 
+// Configuração do Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// Configuração do Multer para o Cloudinary
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
@@ -51,13 +56,14 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
+// Middleware para servir arquivos estáticos (HTML, CSS, JS e imagens)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Rota para a página inicial e arquivos estáticos
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', req.path));
+// Rota para a página inicial
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Rota de Inscrição
@@ -65,11 +71,14 @@ app.post('/inscrever', async (req, res) => {
     await connectDb();
     const { nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias } = req.body;
     
+    // Gerar uma senha mais simples e fácil de memorizar
+    const senha_unica = Math.random().toString(36).substring(2, 8);
+
     const novaInscricao = new Inscricao({
         nome_completo, idade, posicao, tempo_jogando, contato, sexo,
         turnos: turnos,
         dias: dias,
-        senha_unica: uuidv4()
+        senha_unica: senha_unica
     });
 
     try {
