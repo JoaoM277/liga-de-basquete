@@ -4,7 +4,6 @@
   "description": "Landing page para a liga de basquete",
   "main": "server.js",
   "scripts": {
-    "build": "echo 'Building static files...' && cp -R public/ .vercel/output/static/",
     "start": "node server.js"
   },
   "dependencies": {
