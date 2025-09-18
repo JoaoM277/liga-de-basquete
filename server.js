@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
 app.post('/inscrever', async (req, res) => {
     await connectDb();
     const { nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias } = req.body;
-    
+
     const novaInscricao = new Inscricao({
         nome_completo, idade, posicao, tempo_jogando, contato, sexo,
         turnos: turnos,
@@ -163,6 +163,25 @@ app.post('/admin/login', async (req, res) => {
         res.status(401).send('Senha incorreta.');
     }
 });
+
+
+async function connectDb() {
+    if (mongoose.connection.readyState !== 1) {
+        try {
+            await mongoose.connect(MONGODB_URI, {
+                connectTimeoutMS: 30000,
+                socketTimeoutMS: 45000
+            });
+            console.log('Conectado ao MongoDB Atlas!');
+        } catch (err) {
+            console.error('Erro ao conectar ao MongoDB Atlas:', err);
+            throw err;
+        }
+    }
+}
+
+
+
 
 // Exporta o aplicativo Express para que o Vercel possa usá-lo
 export default app;
