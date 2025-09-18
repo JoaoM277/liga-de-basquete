@@ -51,14 +51,13 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
-// Middleware para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Rota para a página inicial
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Rota para a página inicial e arquivos estáticos
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', req.path));
 });
 
 // Rota de Inscrição
@@ -66,14 +65,11 @@ app.post('/inscrever', async (req, res) => {
     await connectDb();
     const { nome_completo, idade, posicao, tempo_jogando, contato, sexo, turnos, dias } = req.body;
     
-    // Gerar uma senha mais simples e fácil de memorizar
-    const senha_unica = Math.random().toString(36).substring(2, 8);
-
     const novaInscricao = new Inscricao({
         nome_completo, idade, posicao, tempo_jogando, contato, sexo,
         turnos: turnos,
         dias: dias,
-        senha_unica: senha_unica
+        senha_unica: uuidv4()
     });
 
     try {
@@ -165,8 +161,7 @@ app.post('/admin/login', async (req, res) => {
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
         try {
-            // AQUI ESTÁ A CORREÇÃO: busca todas as inscrições, pagas ou não
-            const inscricoes = await Inscricao.find({});
+            const inscricoes = await Inscricao.find({ comprovante_nome_arquivo: { $ne: null } });
             res.json(inscricoes);
         } catch (err) {
             console.error('Erro ao buscar dados:', err);
