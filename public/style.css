@@ -548,3 +548,19 @@ footer {
     background-color: var(--cinza-escuro);
     border-radius: 10px;
 }
+
+/* --- Media Query para Dispositivos Móveis --- */
+@media (max-width: 500px) {
+    .countdown-container {
+        padding: 15px;
+        margin: 20px auto;
+    }
+    
+    .timer-display {
+        font-size: 2.5rem; /* Reduz o tamanho da fonte em celulares */
+    }
+    
+    #countdown-title {
+        font-size: 1rem; /* Reduz o tamanho do título */
+    }
+}
