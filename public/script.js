@@ -48,42 +48,39 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function startCountdown() {
-        // Define o tempo de fechamento para a próxima ocorrência
-        let fimDoDia = new Date();
-        fimDoDia.setHours(FECHAMENTO_HORA, FECHAMENTO_MINUTO, FECHAMENTO_SEGUNDO, 0);
+function startCountdown() {
+    // 1. Define o tempo de fechamento para a PRÓXIMA ocorrência das 23:59:59
+    let agora = new Date();
+    let fimDoDia = new Date(agora);
+    fimDoDia.setHours(FECHAMENTO_HORA, FECHAMENTO_MINUTO, FECHAMENTO_SEGUNDO, 0);
 
-        // Se o tempo de fechamento já passou, a contagem é para amanhã.
-        const agora = new Date().getTime();
-        if (agora > fimDoDia.getTime()) {
-            fimDoDia.setDate(fimDoDia.getDate() + 1);
-        }
-
-        const interval = setInterval(() => {
-            const agora = new Date().getTime();
-            const distancia = fimDoDia.getTime() - agora;
-
-            if (distancia < 0) {
-                clearInterval(interval);
-                updateTimerDisplay(0); // Garante que o display seja 00:00:00
-                updateDisplayState(true);
-                return;
-            }
-
-            updateTimerDisplay(distancia); // Atualiza os números
-            updateDisplayState(false); // Mantém o estado como "aberto"
-            
-        }, 1000);
-        
-        // CORREÇÃO: Força o display inicial para o valor correto imediatamente
-        const distanciaInicial = fimDoDia.getTime() - agora;
-        if (distanciaInicial > 0) {
-             updateTimerDisplay(distanciaInicial);
-             updateDisplayState(false);
-        } else {
-             updateDisplayState(true);
-        }
+    // 2. Se o tempo de fechamento já passou, move para o estado fechado imediatamente.
+    if (agora.getTime() >= fimDoDia.getTime()) {
+        updateDisplayState(true);
+        updateTimerDisplay(0);
+        return; 
     }
+    
+    // 3. Inicia o cálculo e a atualização da contagem regressiva
+    const interval = setInterval(() => {
+        const distancia = fimDoDia.getTime() - new Date().getTime();
+
+        if (distancia < 0) {
+            clearInterval(interval);
+            updateTimerDisplay(0);
+            updateDisplayState(true); // FINALIZA A CONTAGEM
+            return;
+        }
+
+        updateTimerDisplay(distancia);
+        updateDisplayState(false); // Mantém o estado como "aberto"
+        
+    }, 1000);
+    
+    // CORREÇÃO CRÍTICA: Faz o cálculo inicial imediatamente, evitando o 00:00:00 estático
+    updateTimerDisplay(fimDoDia.getTime() - agora.getTime());
+    updateDisplayState(false);
+}
 
     // -----------------------------------------------------
     // INICIALIZAÇÃO
