@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const contatoInput = document.getElementById("contato");
     const termosCheckbox = document.getElementById("aceite-termos");
     const submitButton = document.querySelector(".submit-button");
+    const mainSubmitButton = document.getElementById("main-submit-button");
     
     let interval; 
 
@@ -115,10 +116,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Habilitação do botão (mantida)
-    if (termosCheckbox && submitButton) {
-        submitButton.disabled = true;
-        termosCheckbox.addEventListener("change", function () {
-            submitButton.disabled = !this.checked;
-        });
-    }
+    if (termosCheckbox && mainSubmitButton) {
+    mainSubmitButton.disabled = true; // Desabilita APENAS o botão de inscrição
+
+    termosCheckbox.addEventListener("change", function() {
+        mainSubmitButton.disabled = !this.checked; // Habilita com o checkbox
+    });
+}
 });
