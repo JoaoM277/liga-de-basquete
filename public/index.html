@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscrições - Liga de Basquete</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
     <div class="main-container">
@@ -21,6 +22,9 @@
         </header>
 
         <section class="hero">
+            <div class="hero-image-container">
+                <img src="imagens/basquete-de-fundo.jpg" alt="Jogador de basquete em quadra">
+            </div>
             <div class="hero-content">
                 <h1>O JOGO É A SUA PAIXÃO. A QUADRA, O SEU LUGAR.</h1>
                 <p>Se inscreva na primeira edição da melhor Liga de Basquete do Centro-sul Maranhense.</p>
@@ -28,161 +32,137 @@
             </div>
         </section>
 
-    </div>
-    <section class="info-section">
-        <div class="info-item">
-            <img src="/Imagens/bola.png" alt="Ícone de Bola de Basquete" class="icon-placeholder">
-
-            <h2>Competição de Alto Nível</h2>
-            <p>Enfrente os melhores jogadores da cidade, desenvolva suas habilidades e concorra por prêmios incríveis.
-            </p>
-        </div>
-
-        <div class="info-item">
-            <img src="/Imagens/bola.png" alt="Ícone de Bola de Basquete" class="icon-placeholder">
-
-            <h2>Comunidade e Paixão</h2>
-            <p>Junte-se a uma rede de entusiastas do basquete, faça novas amizades e celebre sua paixão pelo esporte.
-            </p>
-        </div>
-
-        <div class="info-item">
-            <img src="/Imagens/bola.png" alt="Ícone de Bola de Basquete" class="icon-placeholder">
-
-            <h2>Organização Profissional</h2>
-            <p>Desfrute de uma experiência completa com jogos bem-organizados, placares atualizados e infraestrutura de
-                qualidade.</p>
-        </div>
-    </section>
-
-    <section id="login" class="login-section">
-        <div class="login-card">
-            <h2>Já tem uma inscrição?</h2>
-            <p>Acesse aqui para editar suas informações ou continuar de onde parou.</p>
-            <form action="/login-inscricao" method="POST">
-                <div class="form-group">
-                    <label for="login-nome">Nome Completo</label>
-                    <input type="text" id="login-nome" name="nome_completo" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-senha">Senha de Uso Único</label>
-                    <input type="text" id="login-senha" name="senha_unica" required>
-                </div>
-                <button type="submit" class="submit-button">Acessar Minha Inscrição</button>
-            </form>
-        </div>
-    </section>
-
-
-    <section id="countdown-section" class="countdown-container">
+    </div> <section id="countdown-section" class="countdown-container">
         <h3 id="countdown-title">AS INSCRIÇÕES SE ENCERRAM EM:</h3>
         <div id="countdown-timer" class="timer-display">
             <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
         </div>
     </section>
 
-    <section id="open-state" id="form" class="registration-form">
-        <div class="form-card">
-            <h2>FORMULÁRIO DE INSCRIÇÃO</h2>
-            <form action="/inscrever" method="POST">
-                <div class="form-group">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" name="nome_completo" required>
-                </div>
-                <div class="form-group">
-                    <label for="idade">Idade</label>
-                    <input type="number" id="idade" name="idade" min="15" required>
-                </div>
-                <div class="form-group">
-                    <label>Sexo</label>
-                    <div class="gender-radio">
-                        <div>
-                            <input type="radio" id="masculino" name="sexo" value="Masculino" required>
-                            <label for="masculino">Masculino</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="feminino" name="sexo" value="Feminino" required>
-                            <label for="feminino">Feminino</label>
+    <div id="open-state">
+        
+        <section id="login" class="login-section">
+            <div class="login-card">
+                <h2>Já tem uma inscrição?</h2>
+                <p>Acesse aqui para editar suas informações ou continuar de onde parou.</p>
+                <form action="/login-inscricao" method="POST">
+                    <div class="form-group">
+                        <label for="login-nome">Nome Completo</label>
+                        <input type="text" id="login-nome" name="nome_completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-senha">Senha de Uso Único</label>
+                        <input type="text" id="login-senha" name="senha_unica" required>
+                    </div>
+                    <button type="submit" class="submit-button">Acessar Minha Inscrição</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="info-item">
+                <i class="fa-solid fa-basketball icon-placeholder"></i>
+                <h2>Competição de Alto Nível</h2>
+                <p>Enfrente os melhores jogadores da cidade, desenvolva suas habilidades e concorra por prêmios incríveis.</p>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-solid fa-users icon-placeholder"></i>
+                <h2>Comunidade e Paixão</h2>
+                <p>Junte-se a uma rede de entusiastas do basquete, faça novas amizades e celebre sua paixão pelo esporte.</p>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-solid fa-medal icon-placeholder"></i>
+                <h2>Organização Profissional</h2>
+                <p>Desfrute de uma experiência completa com jogos bem-organizados, placares atualizados e infraestrutura de qualidade.</p>
+            </div>
+        </section>
+
+        <section id="form" class="registration-form">
+            <div class="form-card">
+                <h2>FORMULÁRIO DE INSCRIÇÃO</h2>
+                <form action="/inscrever" method="POST">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" name="nome_completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idade">Idade</label>
+                        <input type="number" id="idade" name="idade" min="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="posicao">Posição</label>
+                        <input type="text" id="posicao" name="posicao" placeholder="Ex: Armador, Ala, Pivô" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tempo_jogando">Tempo que Joga Basquete</label>
+                        <input type="text" id="tempo_jogando" name="tempo_jogando" placeholder="Ex: 5 anos, desde a infância" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contato">Telefone para Contato</label>
+                        <input type="tel" id="contato" name="contato" placeholder="Ex: (xx) xxxxx-xxxx" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Sexo</label>
+                        <div class="gender-radio">
+                            <div>
+                                <input type="radio" id="masculino" name="sexo" value="Masculino" required>
+                                <label for="masculino">Masculino</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="feminino" name="sexo" value="Feminino" required>
+                                <label for="feminino">Feminino</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="posicao">Posição</label>
-                    <input type="text" id="posicao" name="posicao" placeholder="Ex: Armador, Ala, Pivô" required>
-                </div>
-                <div class="form-group">
-                    <label for="contato">Telefone para Contato</label>
-                    <input type="tel" id="contato" name="contato" placeholder="Ex: (xx) xxxxx-xxxx" required>
-                </div>
-                <div class="form-group">
-                    <label for="tempo_jogando">Tempo que Joga Basquete</label>
-                    <input type="text" id="tempo_jogando" name="tempo_jogando"
-                        placeholder="Ex: 5 anos, desde a infância" required>
-                </div>
 
-                <div class="form-group">
-                    <label>Turno de Disponibilidade</label>
-                    <div class="turno-checkboxes">
-                        <div>
-                            <input type="checkbox" id="manha" name="turnos[]" value="Manhã">
-                            <label for="manha">Manhã</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="tarde" name="turnos[]" value="Tarde">
-                            <label for="tarde">Tarde</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="noite" name="turnos[]" value="Noite">
-                            <label for="noite">Noite</label>
+                    <div class="form-group">
+                        <label>Turno de Disponibilidade</label>
+                        <div class="turno-checkboxes">
+                            <div><input type="checkbox" id="manha" name="turnos[]" value="Manhã"><label for="manha">Manhã</label></div>
+                            <div><input type="checkbox" id="tarde" name="turnos[]" value="Tarde"><label for="tarde">Tarde</label></div>
+                            <div><input type="checkbox" id="noite" name="turnos[]" value="Noite"><label for="noite">Noite</label></div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <details class="dias-expansivel">
-                        <summary>Melhores Dias da Semana</summary>
-                        <div class="dias-checkboxes">
-                            <div><input type="checkbox" id="domingo" name="dias[]" value="domingo"> <label
-                                    for="domingo">Domingo</label></div>
-                            <div><input type="checkbox" id="segunda" name="dias[]" value="segunda"> <label
-                                    for="segunda">Segunda</label></div>
-                            <div><input type="checkbox" id="terca" name="dias[]" value="terca"> <label
-                                    for="terca">Terça</label></div>
-                            <div><input type="checkbox" id="quarta" name="dias[]" value="quarta"> <label
-                                    for="quarta">Quarta</label></div>
-                            <div><input type="checkbox" id="quinta" name="dias[]" value="quinta"> <label
-                                    for="quinta">Quinta</label></div>
-                            <div><input type="checkbox" id="sexta" name="dias[]" value="sexta"> <label
-                                    for="sexta">Sexta</label></div>
-                            <div><input type="checkbox" id="sabado" name="dias[]" value="sabado"> <label
-                                    for="sabado">Sábado</label></div>
-                        </div>
-                    </details>
-                </div>
+                    <div class="form-group">
+                        <details class="dias-expansivel">
+                            <summary>Melhores Dias da Semana</summary>
+                            <div class="dias-checkboxes">
+                                <div><input type="checkbox" id="domingo" name="dias[]" value="domingo"> <label for="domingo">Domingo</label></div>
+                                <div><input type="checkbox" id="segunda" name="dias[]" value="segunda"> <label for="segunda">Segunda</label></div>
+                                <div><input type="checkbox" id="terca" name="dias[]" value="terca"> <label for="terca">Terça</label></div>
+                                <div><input type="checkbox" id="quarta" name="dias[]" value="quarta"> <label for="quarta">Quarta</label></div>
+                                <div><input type="checkbox" id="quinta" name="dias[]" value="quinta"> <label for="quinta">Quinta</label></div>
+                                <div><input type="checkbox" id="sexta" name="dias[]" value="sexta"> <label for="sexta">Sexta</label></div>
+                                <div><input type="checkbox" id="sabado" name="dias[]" value="sabado"> <label for="sabado">Sábado</label></div>
+                            </div>
+                        </details>
+                    </div>
+                    
+                    <div class="form-group termos-aceite">
+                        <input type="checkbox" id="aceite-termos" required>
+                        <label for="aceite-termos">
+                            Eu li e concordo com os <a href="termos.pdf" target="_blank">Termos e Condições</a> de Inscrição.
+                        </label>
+                    </div>
 
-                <div class="form-group termos-aceite">
-                    <input type="checkbox" id="aceite-termos" required>
-                    <label for="aceite-termos">
-                        Eu li e concordo com os <a
-                            href="https://drive.google.com/file/d/1k6bfff5QyaaD8wltGo00FsLeuoNR6LBL/view?usp=sharing">Termos
-                            e Condições</a> de Inscrição.
-                    </label>
-                </div>
+                    <button type="submit" class="submit-button">Enviar Inscrição</button>
+                    
+                </form>
+            </div>
+        </section>
 
-                <button type="submit" class="submit-button">Enviar Inscrição</button>
-
-            </form>
-        </div>
-    </section>
-
-    <section id="closed-state" class="closed-container" style="display: none;">
+    </div> <section id="closed-state" class="closed-container" style="display: none;">
         <h1>INSCRIÇÕES ENCERRADAS</h1>
         <p>Agradecemos a todos os participantes. Nos vemos na próxima edição!</p>
-
+        
         <div class="continue-payment-box">
             <h3>JÁ SOU INSCRITO(A)</h3>
             <p>Acesse com sua senha para finalizar o pagamento:</p>
-
+            
             <form action="/login-inscricao" method="POST">
                 <div class="form-group">
                     <label for="closed-login-nome">Nome Completo</label>
@@ -198,9 +178,9 @@
     </section>
 
     <footer>
-        <p>Copyright © 2025 Liga Cordina de Basquete. Todos os direitos reservados.</p>
+        <p>Copyright © 2025 Liga de Basquete. Todos os direitos reservados.</p>
     </footer>
-
+    
+    <script src="script.js"></script>
 </body>
-
 </html>
