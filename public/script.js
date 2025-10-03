@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function() {
+
+document.addEventListener("DOMContentLoaded", function () {
     // -----------------------------------------------------
     // VARIÁVEIS DE ESTADO E TEMPO DE FECHAMENTO (HORÁRIO LOCAL DO USUÁRIO)
     // -----------------------------------------------------
@@ -18,11 +19,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const contatoInput = document.getElementById("contato");
     const termosCheckbox = document.getElementById("aceite-termos");
     const submitButton = document.querySelector(".submit-button");
-    
-    let interval; // Variável para armazenar o intervalo
 
     // -----------------------------------------------------
-    // FUNÇÕES DO CRONÔMETRO
+    // FUNÇÕES
     // -----------------------------------------------------
 
     function updateTimerDisplay(distancia) {
@@ -57,34 +56,36 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function startCountdown() {
+        // cria a data de fechamento no fuso local do cliente
         let fimDoDia = new Date();
         fimDoDia.setHours(FECHAMENTO_HORA, FECHAMENTO_MINUTO, FECHAMENTO_SEGUNDO, 0);
 
         const agora = new Date();
 
-        // Se já passou o tempo de fechamento de hoje, o tempo é para amanhã.
+        // Se já passou hoje → joga para amanhã
         if (agora.getTime() > fimDoDia.getTime()) {
             fimDoDia.setDate(fimDoDia.getDate() + 1);
         }
 
         function tick() {
-            const distancia = fimDoDia.getTime() - new Date().getTime();
+            const agora = new Date();
+            const distancia = fimDoDia.getTime() - agora.getTime();
 
             if (distancia <= 0) {
                 updateTimerDisplay(0);
                 updateDisplayState(true);
-                clearInterval(interval); // Garante que o cronômetro pare
+                clearInterval(interval);
             } else {
                 updateTimerDisplay(distancia);
                 updateDisplayState(false);
             }
         }
 
-        // Roda de imediato (para evitar o 00:00:00 estático)
-        tick(); 
+        // roda de imediato
+        tick();
 
-        // Roda a cada segundo
-        interval = setInterval(tick, 1000);
+        // roda a cada segundo
+        const interval = setInterval(tick, 1000);
     }
 
     // -----------------------------------------------------
@@ -95,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
         startCountdown();
     }
 
-    // Máscara de Telefone (mantida)
+    // Máscara de Telefone
     if (contatoInput) {
         contatoInput.addEventListener("input", function () {
             let valor = this.value.replace(/\D/g, "");
@@ -113,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Habilitação do botão (mantida)
+    // Habilitação do botão
     if (termosCheckbox && submitButton) {
         submitButton.disabled = true;
         termosCheckbox.addEventListener("change", function () {
