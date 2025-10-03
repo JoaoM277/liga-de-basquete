@@ -73,7 +73,15 @@
         </div>
     </section>
 
-    <section id="form" class="registration-form">
+
+    <section id="countdown-section" class="countdown-container">
+        <h3 id="countdown-title">AS INSCRIÇÕES SE ENCERRAM EM:</h3>
+        <div id="countdown-timer" class="timer-display">
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+        </div>
+    </section>
+
+    <section id="open-state" id="form" class="registration-form">
         <div class="form-card">
             <h2>FORMULÁRIO DE INSCRIÇÃO</h2>
             <form action="/inscrever" method="POST">
@@ -167,8 +175,30 @@
         </div>
     </section>
 
+    <section id="closed-state" class="closed-container" style="display: none;">
+        <h1>INSCRIÇÕES ENCERRADAS</h1>
+        <p>Agradecemos a todos os participantes. Nos vemos na próxima edição!</p>
+
+        <div class="continue-payment-box">
+            <h3>JÁ SOU INSCRITO(A)</h3>
+            <p>Acesse com sua senha para finalizar o pagamento:</p>
+
+            <form action="/login-inscricao" method="POST">
+                <div class="form-group">
+                    <label for="closed-login-nome">Nome Completo</label>
+                    <input type="text" id="closed-login-nome" name="nome_completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="closed-login-senha">Senha de Uso Único</label>
+                    <input type="text" id="closed-login-senha" name="senha_unica" required>
+                </div>
+                <button type="submit" class="submit-button">Acessar Pagamento</button>
+            </form>
+        </div>
+    </section>
+
     <footer>
-        <p>Copyright © 2025 Liga de Basquete. Todos os direitos reservados.</p>
+        <p>Copyright © 2025 Liga Cordina de Basquete. Todos os direitos reservados.</p>
     </footer>
 
 </body>

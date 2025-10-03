@@ -499,3 +499,52 @@ footer {
     color: var(--branco);
     margin-bottom: 20px;
 }
+
+/* --- Estilos do Cronômetro --- */
+.countdown-container {
+    background-color: #333;
+    padding: 20px;
+    margin: 40px auto;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+#countdown-title {
+    color: var(--dourado);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.timer-display {
+    font-family: 'Menlo', monospace;
+    font-size: 3.5rem;
+    color: var(--laranja);
+    font-weight: bold;
+}
+
+/* --- Estilos do Estado Fechado --- */
+.closed-container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.closed-container h1 {
+    color: var(--laranja);
+    font-size: 3rem;
+}
+
+.closed-container p {
+    color: var(--branco);
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.continue-payment-box {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: var(--cinza-escuro);
+    border-radius: 10px;
+}
